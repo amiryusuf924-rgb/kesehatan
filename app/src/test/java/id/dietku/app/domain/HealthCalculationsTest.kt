@@ -19,9 +19,9 @@ class HealthCalculationsTest {
     @Test
     fun maleMifflinStJeorAndDefaultTargetMatchProfile() {
         val bmr = HealthCalculations.bmrMifflinStJeor(86.0, 165.0, 27, "Laki-laki")
-        assertEquals(1741.25, bmr, 0.01)
-        assertEquals(2089, HealthCalculations.dailyEnergyNeedsKcal(bmr, 1.2))
-        assertEquals(1600, HealthCalculations.recommendedCalorieTargetKcal(2089))
+        assertEquals(1761.25, bmr, 0.01)
+        assertEquals(2114, HealthCalculations.dailyEnergyNeedsKcal(bmr, 1.2))
+        assertEquals(1600, HealthCalculations.recommendedCalorieTargetKcal(2114))
     }
 
     @Test

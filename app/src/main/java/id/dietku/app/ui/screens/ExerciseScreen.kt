@@ -72,6 +72,8 @@ fun ExerciseScreen(viewModel: ExerciseViewModel = hiltViewModel()) {
     val logs by viewModel.weekLogs.collectAsStateWithLifecycle()
     val baseline by viewModel.stepBaseline.collectAsStateWithLifecycle()
     val today = LocalDate.now()
+    val baselineDate = baseline.date
+    val baselineCount = baseline.count
     val todayLog = logs.firstOrNull {
         Instant.ofEpochMilli(it.loggedAtEpochMillis).atZone(ZoneId.systemDefault()).toLocalDate() == today && it.completed
     }
@@ -105,17 +107,17 @@ fun ExerciseScreen(viewModel: ExerciseViewModel = hiltViewModel()) {
         }
     }
 
-    DisposableEffect(stepSensor, permissionGranted, baseline.date, baseline.count) {
+    DisposableEffect(stepSensor, permissionGranted, baselineDate, baselineCount) {
         if (stepSensor != null && permissionGranted) {
             val listener = object : SensorEventListener {
                 override fun onSensorChanged(event: SensorEvent) {
                     val rawSteps = event.values.firstOrNull() ?: return
                     val todayKey = today.toString()
-                    if (baseline.date != todayKey || baseline.count == null || rawSteps < baseline.count) {
+                    if (baselineDate != todayKey || baselineCount == null || rawSteps < baselineCount) {
                         viewModel.saveStepBaseline(todayKey, rawSteps)
                         stepCount = 0
                     } else {
-                        stepCount = (rawSteps - baseline.count).toInt().coerceAtLeast(0)
+                        stepCount = (rawSteps - baselineCount).toInt().coerceAtLeast(0)
                     }
                 }
 

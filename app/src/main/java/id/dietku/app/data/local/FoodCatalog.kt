@@ -45,18 +45,18 @@ object FoodCatalog {
     private fun food(
         name: String,
         serving: String,
-        calories: Double,
-        protein: Double,
-        carbohydrates: Double,
-        fat: Double,
+        calories: Number,
+        protein: Number,
+        carbohydrates: Number,
+        fat: Number,
         category: String,
     ) = FoodItemEntity(
         name = name,
         servingDescription = serving,
-        caloriesKcal = calories,
-        proteinGrams = protein,
-        carbohydrateGrams = carbohydrates,
-        fatGrams = fat,
+        caloriesKcal = calories.toDouble(),
+        proteinGrams = protein.toDouble(),
+        carbohydrateGrams = carbohydrates.toDouble(),
+        fatGrams = fat.toDouble(),
         category = category,
     )
 }
